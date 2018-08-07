@@ -1,0 +1,26 @@
+$ cros_sdk
+$ git clone https://anongit.freedesktop.org/git/xorg/app/intel-gpu-tools.git
+$ cd intel-gpu-tools
+$ # Edit configure.ac to set enable_assembler=no
+$ ./autogen.sh --prefix=/build/$BOARD_TYPE/usr --libdir=/build/$BOARD_TYPE/usr/lib64 --without-libunwind
+$ # If still there is issue related to libunwind, then run command: sudo emerge libunwind or sudo emerge libdrm
+$ make -j32
+$ sudo make install
+  
+emerge libunwind and cros deploy it on DUT
+$emerge-<BOARD-NAME> libunwind
+$cros deploy <DUT IP ADDRESS> libunwind
+  
+Restart the device.
+
+
+copy from host to DUT:
+scp -rf ./intel-gpu-tools root@192.168.0.11:/usr/local/
+
+in DUT:
+stop ui
+stop powerd
+pkill freecon
+
+DUT:
+cd cd /usr/local/intel-gpu-tools/
